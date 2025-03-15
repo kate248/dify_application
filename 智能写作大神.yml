@@ -1,0 +1,380 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 智能写作大神
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1731599416552-source-1731599495893-target
+      source: '1731599416552'
+      sourceHandle: source
+      target: '1731599495893'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1731599495893-source-1731599741189-target
+      source: '1731599495893'
+      sourceHandle: source
+      target: '1731599741189'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1731599741189-source-1731600246401-target
+      source: '1731599741189'
+      sourceHandle: source
+      target: '1731600246401'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1731600246401'
+        sourceType: iteration-start
+        targetType: llm
+      id: 1731600246401start-source-1731600264308-target
+      source: 1731600246401start
+      sourceHandle: source
+      target: '1731600264308'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1731600246401-source-1731600513216-target
+      source: '1731600246401'
+      sourceHandle: source
+      target: '1731600513216'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: end
+      id: 1731600513216-source-1731600582096-target
+      source: '1731600513216'
+      sourceHandle: source
+      target: '1731600582096'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 文章标题
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: title
+        - label: 一级章节
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: chapter
+      height: 115
+      id: '1731599416552'
+      position:
+        x: 30
+        y: 230
+      positionAbsolute:
+        x: 30
+        y: 230
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+            top_k: 11
+            top_p: 0.9
+          mode: chat
+          name: qwen2.5:7b
+          provider: ollama
+        prompt_template:
+        - id: 80b555ed-78ad-4419-ad4b-b0784d5934de
+          role: system
+          text: "## ⻆⾊：⽂章撰写专家 \n## 技能：你根据⽤户输⼊的⽂章标题{{#1731599416552.title#}}和各章节 \n\
+            名称{{#1731599416552.chapter#}} ，⽣成各个章节及⼦章节 \n## ⽬标： \n- 确保⽣成的每个⼦章节和⽗章节紧密相关\
+            \ \n- 纵观整体章节，必须保证各章节过渡连贯流畅 \n- 最终输出json字符串，详细请看以下输出示例 \n## 限制： \n- 输出内容必须是标准json字符串，不要包含任何与json字符串⽆关的内容\
+            \ \n- 请严格按照输出示例中的数据格式输出json字符串，不要输出其他任何与json字符串 \n⽆关⽂本、以及特殊字符 \n- 不要输出任何与json⽆关的特殊符号，⽐如\\\
+            n或者是#或者是``` \n- 请将位于输出内容开头或结尾的任何与json⽆关的特殊符号都删掉 \n## 输出示例： \n[{\"chapter\"\
+            : \"引⾔\", \"subchapter\": [\"1. ⽓候变化对沿海城市影响的概述\",  \"2. 理解这些影响的重要性\"]},\
+            \ {\"chapter\": \"海平⾯上升\", \"subchapter\":  [\"1. 海平⾯上升的原因\", \"2. 对沿海基础设施和社区的影响\"\
+            \ ,\"3. 受影响城市的例 ⼦\"}]"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1731599495893'
+      position:
+        x: 658
+        y: 119
+      positionAbsolute:
+        x: 658
+        y: 119
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json \ndef main(arg1): \n    data = json.loads(arg1.strip())\
+          \ \n    return { \n        \"result\": data \n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1731599495893'
+          - text
+          variable: arg1
+      height: 53
+      id: '1731599741189'
+      position:
+        x: 859
+        y: 235
+      positionAbsolute:
+        x: 859
+        y: 235
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 185
+        is_parallel: false
+        iterator_selector:
+        - '1731599741189'
+        - result
+        output_selector:
+        - '1731600264308'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1731600246401start
+        title: 迭代
+        type: iteration
+        width: 388
+      height: 185
+      id: '1731600246401'
+      position:
+        x: 1186
+        y: 169
+      positionAbsolute:
+        x: 1186
+        y: 169
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 388
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1731600246401start
+      parentId: '1731600246401'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1210
+        y: 237
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1731600246401'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:7b
+          provider: ollama
+        prompt_template:
+        - id: f646c43a-b965-41d4-983c-9d494f4c49c5
+          role: system
+          text: 你是⼀位⽂章撰写专家，擅⻓写有吸引⼒的⻓篇⽂章
+        - id: bc72fe52-1baa-48c8-aed2-b95c1b8b172e
+          role: user
+          text: "你正在写⼀篇名为{{#1731599416552.title#}}的⽂章，请根据以下信息 {{#1731600246401.item#}}\
+            \ 写每⼀个章节，⽣成全⽂时， \n请以完整的⼤纲作为参考 {{#1731599416552.chapter#}}"
+        selected: false
+        title: 生成内容
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1731600264308'
+      parentId: '1731600246401'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 1314
+        y: 237
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def main(args1): \n    return { \n    \"result\": \"---华丽分割线----\"\
+          .join(args1) \n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 合并长文
+        type: code
+        variables:
+        - value_selector:
+          - '1731600246401'
+          - output
+          variable: args1
+      height: 53
+      id: '1731600513216'
+      position:
+        x: 1634
+        y: 169
+      positionAbsolute:
+        x: 1634
+        y: 169
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1731600513216'
+          - result
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1731600582096'
+      position:
+        x: 1938
+        y: 169
+      positionAbsolute:
+        x: 1938
+        y: 169
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1752
+      y: 55.5
+      zoom: 1

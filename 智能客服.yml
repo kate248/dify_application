@@ -1,0 +1,540 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 智能客服
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1731648379816-source-1731648464561-target
+      source: '1731648379816'
+      sourceHandle: source
+      target: '1731648464561'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: question-classifier
+      id: 1731648464561-2-1731648577208-target
+      source: '1731648464561'
+      sourceHandle: '2'
+      target: '1731648577208'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: code
+      id: 1731648464561-1-1731648858263-target
+      source: '1731648464561'
+      sourceHandle: '1'
+      target: '1731648858263'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: code
+      id: 1731648577208-2-1731648941990-target
+      source: '1731648577208'
+      sourceHandle: '2'
+      target: '1731648941990'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: code
+      id: 1731648577208-1-1731649013957-target
+      source: '1731648577208'
+      sourceHandle: '1'
+      target: '1731649013957'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: code
+      id: 1731648577208-1731648611456-1731649049038-target
+      source: '1731648577208'
+      sourceHandle: '1731648611456'
+      target: '1731649049038'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: variable-aggregator
+      id: 1731649013957-source-1731649142445-target
+      source: '1731649013957'
+      sourceHandle: source
+      target: '1731649142445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: variable-aggregator
+      id: 1731648858263-source-1731649142445-target
+      source: '1731648858263'
+      sourceHandle: source
+      target: '1731649142445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: variable-aggregator
+      id: 1731648941990-source-1731649142445-target
+      source: '1731648941990'
+      sourceHandle: source
+      target: '1731649142445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: variable-aggregator
+      id: 1731649049038-source-1731649142445-target
+      source: '1731649049038'
+      sourceHandle: source
+      target: '1731649142445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: http-request
+      id: 1731649142445-source-1731649199036-target
+      source: '1731649142445'
+      sourceHandle: source
+      target: '1731649199036'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: end
+      id: 1731649199036-source-1731649273940-target
+      source: '1731649199036'
+      sourceHandle: source
+      target: '1731649273940'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 商品的ID
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: produce_id
+        - label: 用户评价
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: review
+      height: 115
+      id: '1731648379816'
+      position:
+        x: -111.83262528450484
+        y: 72.93689939053965
+      positionAbsolute:
+        x: -111.83262528450484
+        y: 72.93689939053965
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 正面评价
+        - id: '2'
+          name: 负面评价
+        desc: ''
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:7b
+          provider: ollama
+        query_variable_selector:
+        - '1731648379816'
+        - review
+        selected: false
+        title: 正负评价分类
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 175
+      id: '1731648464561'
+      position:
+        x: 168.0038207755781
+        y: 53.40902735559007
+      positionAbsolute:
+        x: 168.0038207755781
+        y: 53.40902735559007
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 质量差
+        - id: '2'
+          name: 物流慢
+        - id: '1731648611456'
+          name: 其他
+        desc: ''
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+            top_k: 11
+            top_p: 0.9
+          mode: chat
+          name: qwen2.5:7b
+          provider: ollama
+        query_variable_selector:
+        - '1731648379816'
+        - review
+        selected: false
+        title: 负面信息评价的分类器
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 211
+      id: '1731648577208'
+      position:
+        x: 416.8662997357204
+        y: 266.717458874926
+      positionAbsolute:
+        x: 416.8662997357204
+        y: 266.717458874926
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "##正面评价\nimport json \ndef main(product_id, review): \n    message =\
+          \ \"恭喜，你的产品收到了来⾃客户的正向反馈，⽤户对产品 {} 的评价是 {}\".format(product_id, review) \n\
+          \    data = {\n    \"msg_type\": \"text\",\n    \"content\": {\"text\":\
+          \ message}\n        }\n    return {\n    \"result\": json.dumps(data, ensure_ascii=False)\
+          \ \n     }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 正面评价
+        type: code
+        variables:
+        - value_selector:
+          - '1731648379816'
+          - produce_id
+          variable: product_id
+        - value_selector:
+          - '1731648379816'
+          - review
+          variable: review
+      height: 53
+      id: '1731648858263'
+      position:
+        x: 732.4472203565588
+        y: 72.93689939053965
+      positionAbsolute:
+        x: 732.4472203565588
+        y: 72.93689939053965
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "## 负面评价-物流慢\nimport json \ndef main(product_id, review): \n    message\
+          \ = \"请注意，你的产品收到了来⾃客户的负面评价-物流慢，⽤户对产品 {} 的评价是 {}\".format(product_id, review)\
+          \ \n    data = {\n    \"msg_type\": \"text\",\n    \"content\": {\"text\"\
+          : message}\n        }\n    return {\n    \"result\": json.dumps(data, ensure_ascii=False)\
+          \ \n     }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 负面评价-物流慢
+        type: code
+        variables:
+        - value_selector:
+          - '1731648379816'
+          - produce_id
+          variable: product_id
+        - value_selector:
+          - '1731648379816'
+          - review
+          variable: review
+      height: 53
+      id: '1731648941990'
+      position:
+        x: 718.5689030257263
+        y: 379.2898976646355
+      positionAbsolute:
+        x: 718.5689030257263
+        y: 379.2898976646355
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "## 负面评价-质量差\nimport json \ndef main(product_id, review): \n    message\
+          \ = \"请注意，你的产品收到了来⾃客户的负面评价-质量差，⽤户对产品 {} 的评价是 {}\".format(product_id, review)\
+          \ \n    data = {\n    \"msg_type\": \"text\",\n    \"content\": {\"text\"\
+          : message}\n        }\n    return {\n    \"result\": json.dumps(data, ensure_ascii=False)\
+          \ \n     }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 负面评价-质量差
+        type: code
+        variables:
+        - value_selector:
+          - '1731648379816'
+          - produce_id
+          variable: product_id
+        - value_selector:
+          - '1731648379816'
+          - review
+          variable: review
+      height: 53
+      id: '1731649013957'
+      position:
+        x: 718.5689030257263
+        y: 284.0520658001187
+      positionAbsolute:
+        x: 718.5689030257263
+        y: 284.0520658001187
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "## 负面评价-其它\nimport json \ndef main(product_id, review): \n    message\
+          \ = \"请注意，你的产品收到了来⾃客户的负面反馈，⽤户对产品 {} 的评价是 {}\".format(product_id, review)\
+          \ \n    data = {\n    \"msg_type\": \"text\",\n    \"content\": {\"text\"\
+          : message}\n        }\n    return {\n    \"result\": json.dumps(data, ensure_ascii=False)\
+          \ \n     }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 负面评价-其它
+        type: code
+        variables:
+        - value_selector:
+          - '1731648379816'
+          - produce_id
+          variable: product_id
+        - value_selector:
+          - '1731648379816'
+          - review
+          variable: review
+      height: 53
+      id: '1731649049038'
+      position:
+        x: 718.5689030257263
+        y: 471.2898976646355
+      positionAbsolute:
+        x: 718.5689030257263
+        y: 471.2898976646355
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1731649049038'
+          - result
+        - - '1731649013957'
+          - result
+        - - '1731648941990'
+          - result
+        - - '1731648858263'
+          - result
+      height: 190
+      id: '1731649142445'
+      position:
+        x: 1113.6149488690562
+        y: 199.60355951065355
+      positionAbsolute:
+        x: 1113.6149488690562
+        y: 199.60355951065355
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-4
+            key: ''
+            type: text
+            value: '{{#1731649142445.output#}}'
+          type: raw-text
+        desc: ''
+        headers: 'Content-Type:application/json
+
+          Charset:UTF-8'
+        method: post
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: https://open.feishu.cn/open-apis/bot/v2/hook/8a499e9e-8b98-4566-8585-6dfdc9d8638d
+        variables: []
+      height: 141
+      id: '1731649199036'
+      position:
+        x: 1417.6149488690562
+        y: 199.60355951065355
+      positionAbsolute:
+        x: 1417.6149488690562
+        y: 199.60355951065355
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1731649199036'
+          - status_code
+          variable: status_code
+        - value_selector:
+          - '1731649199036'
+          - body
+          variable: body
+        selected: false
+        title: 结束
+        type: end
+      height: 115
+      id: '1731649273940'
+      position:
+        x: 1721.6149488690562
+        y: 199.60355951065355
+      positionAbsolute:
+        x: 1721.6149488690562
+        y: 199.60355951065355
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -615.1702870332763
+      y: 16.979858944386137
+      zoom: 0.757858283255199

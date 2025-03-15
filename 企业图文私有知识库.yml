@@ -1,0 +1,388 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 企业图文私有知识库
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1731670280281-source-1731670411921-target
+      source: '1731670280281'
+      sourceHandle: source
+      target: '1731670411921'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1731670411921-source-llm-target
+      source: '1731670411921'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: llm-source-1731670781543-target
+      source: llm
+      sourceHandle: source
+      target: '1731670781543'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: if-else
+      id: 1731670781543-source-1731670852064-target
+      source: '1731670781543'
+      sourceHandle: source
+      target: '1731670852064'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1731670852064-false-answer-target
+      source: '1731670852064'
+      sourceHandle: 'false'
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1731670852064-true-1731670923629-target
+      source: '1731670852064'
+      sourceHandle: 'true'
+      target: '1731670923629'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: answer
+      id: 1731670923629-source-1731670971333-target
+      source: '1731670923629'
+      sourceHandle: source
+      target: '1731670971333'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 53
+      id: '1731670280281'
+      position:
+        x: -43
+        y: 222
+      positionAbsolute:
+        x: -43
+        y: 222
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1731670411921'
+          - result
+        desc: ''
+        memory:
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:7b
+          provider: ollama
+        prompt_template:
+        - id: 287f2491-5333-4f8d-8170-77d5642f983d
+          role: system
+          text: "{{#context#}}\n注意，如果模型输出内容中包含URL，请将URL单独提取出来并采⽤一下格式输出：\n{\"Content\"\
+            : \"示例输出内容\", \"URL\":\"URL\"}\n请将模型输出内容严格按照以下格式输出：\n{\"Content\": \"\
+            示例输出内容\"} \n请将模型结果以JSON格式输出，不要输出其他任何与JSON格式⽆关的内容。 \n注意：URL以http或https开头\n"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: llm
+      position:
+        x: 823
+        y: 147
+      positionAbsolute:
+        x: 823
+        y: 147
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1731670781543.Content#}}'
+        desc: ''
+        selected: false
+        title: 文本回复
+        type: answer
+        variables: []
+      height: 101
+      id: answer
+      position:
+        x: 1943
+        y: 292
+      positionAbsolute:
+        x: 1943
+        y: 292
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - 37bb21a7-0ef9-4288-a1d1-40b5cd1bdd67
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: bge-reranker-large
+            provider: xinference
+          score_threshold: null
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: bge-base-zh-v1.5
+              embedding_provider_name: xinference
+              vector_weight: 1
+        query_variable_selector:
+        - '1731670280281'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 91
+      id: '1731670411921'
+      position:
+        x: 290
+        y: 213
+      positionAbsolute:
+        x: 290
+        y: 213
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 1
+            top_p: 0.9
+          mode: chat
+          name: qwen2.5:7b
+          provider: ollama
+        parameters:
+        - description: 正文内容
+          name: Content
+          required: false
+          type: string
+        - description: 图片链接地址
+          name: URL
+          required: false
+          type: string
+        query:
+        - llm
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1731670781543'
+      position:
+        x: 1175
+        y: 173
+      positionAbsolute:
+        x: 1175
+        y: 173
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 14c797f8-1f1d-442c-831f-3fb22785cc89
+            value: ''
+            varType: string
+            variable_selector:
+            - '1731670781543'
+            - URL
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 125
+      id: '1731670852064'
+      position:
+        x: 1561
+        y: 181
+      positionAbsolute:
+        x: 1561
+        y: 181
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: '{{#1731670781543.URL#}}'
+        variables: []
+      height: 95
+      id: '1731670923629'
+      position:
+        x: 1917
+        y: 37
+      positionAbsolute:
+        x: 1917
+        y: 37
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1731670781543.Content#}}
+
+          {{#1731670923629.files#}}'
+        desc: ''
+        selected: false
+        title: 图文回复
+        type: answer
+        variables: []
+      height: 120
+      id: '1731670971333'
+      position:
+        x: 2220
+        y: 37
+      positionAbsolute:
+        x: 2220
+        y: 37
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -942.5
+      y: 70.5
+      zoom: 1
